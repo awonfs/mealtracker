@@ -5,3 +5,4 @@ export const appRouter = router({
     return [10, 20, 30];
   }),
 });
+export type AppRouter = typeof appRouter;
