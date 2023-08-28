@@ -3,13 +3,13 @@ import { trpc } from "../_trpc/client";
 import { useState } from "react";
 
 function TodoList() {
+  const [todo, setTodo] = useState("");
   const getTodos = trpc.getTodos.useQuery();
   const addTodo = trpc.addTodo.useMutation({
     onSettled: () => {
       getTodos.refetch();
     },
   });
-  const [todo, setTodo] = useState("");
 
   async function handleTodoSubmit() {
     if (todo.length === 0) return;
