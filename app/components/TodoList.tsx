@@ -23,7 +23,6 @@ function TodoList() {
       <div>
         <label htmlFor="todo">Add todo</label>
         <input
-          className="text-black"
           id="todo"
           type="text"
           value={todo}
