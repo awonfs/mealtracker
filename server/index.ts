@@ -4,6 +4,7 @@ import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import Database from "better-sqlite3";
 import { todos } from "@/db/schema";
 import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 const sqlite = new Database("sqlite.db");
 const db = drizzle(sqlite);
@@ -15,6 +16,10 @@ export const appRouter = router({
   }),
   addTodo: publicProcedure.input(z.string()).mutation(async (options) => {
     await db.insert(todos).values({ content: options.input, done: 0 }).run();
+    return true;
+  }),
+  deleteTodo: publicProcedure.input(z.number()).mutation(async (options) => {
+    await db.delete(todos).where(eq(todos.id, options.input)).run();
     return true;
   }),
 });
