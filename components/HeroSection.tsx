@@ -5,7 +5,7 @@ import Link from "next/link";
 
 function HeroSection() {
   return (
-    <div className="flex justify-center gap-6 border p-8">
+    <div className="flex justify-center gap-8 border p-8">
       <div className="flex-2">
         <FoodCardForm />
       </div>

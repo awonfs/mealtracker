@@ -30,6 +30,7 @@ function FoodCardForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    form.reset();
   }
   return (
     <Form {...form}>
