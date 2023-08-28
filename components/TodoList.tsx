@@ -4,10 +4,17 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { serverClient } from "@/app/_trpc/serverClient";
 
-function TodoList() {
+function TodoList({
+  initialTodos,
+}: {
+  initialTodos: Awaited<ReturnType<(typeof serverClient)["getTodos"]>>;
+}) {
   const [todo, setTodo] = useState("");
-  const getTodos = trpc.getTodos.useQuery();
+  const getTodos = trpc.getTodos.useQuery(undefined, {
+    initialData: initialTodos,
+  });
   const addTodo = trpc.addTodo.useMutation({
     onSettled: () => {
       getTodos.refetch();
