@@ -27,10 +27,9 @@ function FoodCardMenu() {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Are you sure absolutely sure?</SheetTitle>
+          <SheetTitle>Your foodCards</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Here you can see all your foodCards.
           </SheetDescription>
         </SheetHeader>
       </SheetContent>

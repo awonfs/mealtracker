@@ -4,7 +4,7 @@ import FoodCardMenu from "./FoodCardMenu";
 function Header() {
   return (
     <header className="container p-6 flex justify-around items-center ">
-      <h1>MealTracker</h1>
+      <h1 className="text-xl">MealTracker</h1>
       <FoodCardMenu />
     </header>
   );
