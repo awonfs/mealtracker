@@ -17,11 +17,11 @@ type FoodCardProps = {
 
 function FoodCard({ title, description, createdAt }: FoodCardProps) {
   return (
-    <Card className="h-[100px] rounded bg-primary">
+    <Card className="rounded bg-primary hover:cursor-pointer hover:scale-105 transition-all">
       <CardHeader>
-        <CardTitle className="flex justify-between text-lg">
+        <CardTitle className="flex justify-between text-lg font-medium">
           <span>{title}</span>
-          <Trash2 />
+          <Trash2 className="p-1 hover:scale-105 transition-all" />
         </CardTitle>
         <CardDescription className="flex flex-col text-xs text-primary-foreground">
           <span>{description}</span>
