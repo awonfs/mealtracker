@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { trpc } from "../app/_trpc/client";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -20,6 +21,14 @@ const formSchema = z.object({
 });
 
 function FoodCardForm() {
+  const getFoodCards = trpc.getFoodCards.useQuery();
+
+  const addFoodCard = trpc.addFoodCard.useMutation({
+    onSettled: () => {
+      getFoodCards.refetch();
+    },
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,8 +37,8 @@ function FoodCardForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await addFoodCard.mutateAsync(values);
     form.reset();
   }
   return (

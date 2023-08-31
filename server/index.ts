@@ -25,5 +25,12 @@ export const appRouter = router({
   getFoodCards: publicProcedure.query(async () => {
     return await db.select().from(foodCards).all();
   }),
+  addFoodCard: publicProcedure
+    .input(z.object({ title: z.string(), description: z.string() }))
+    .mutation(async (values) => {
+      const { title, description } = values.input;
+      await db.insert(foodCards).values({ title, description }).run();
+      return true;
+    }),
 });
 export type AppRouter = typeof appRouter;
