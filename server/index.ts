@@ -2,7 +2,7 @@ import { publicProcedure, router } from "./trpc";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import Database from "better-sqlite3";
-import { todos } from "@/db/schema";
+import { todos, foodCards } from "@/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
@@ -21,6 +21,9 @@ export const appRouter = router({
   deleteTodo: publicProcedure.input(z.number()).mutation(async (options) => {
     await db.delete(todos).where(eq(todos.id, options.input)).run();
     return true;
+  }),
+  getFoodCards: publicProcedure.query(async () => {
+    return await db.select().from(foodCards).all();
   }),
 });
 export type AppRouter = typeof appRouter;

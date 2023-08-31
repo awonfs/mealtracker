@@ -1,3 +1,4 @@
+"use client";
 import {
   Sheet,
   SheetContent,
@@ -11,10 +12,20 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { serverClient } from "@/app/_trpc/serverClient";
+import { trpc } from "../app/_trpc/client";
 
 import { Menu } from "lucide-react";
 
-function FoodCardMenu() {
+function FoodCardMenu({
+  foodCards,
+}: {
+  foodCards: Awaited<ReturnType<(typeof serverClient)["getFoodCards"]>>;
+}) {
+  const getFoodCards = trpc.getFoodCards.useQuery(undefined, {
+    initialData: foodCards,
+  });
+
   return (
     <Sheet>
       <SheetTrigger>
@@ -31,6 +42,17 @@ function FoodCardMenu() {
           <SheetDescription>
             Here you can see all your foodCards.
           </SheetDescription>
+          <div>
+            {getFoodCards.data?.map((foodCard) => {
+              return (
+                <div key={foodCard.id}>
+                  <h1>{foodCard.title}</h1>
+                  <p>{foodCard.description}</p>
+                  <p>{foodCard.createdAt}</p>
+                </div>
+              );
+            })}
+          </div>
         </SheetHeader>
       </SheetContent>
     </Sheet>
