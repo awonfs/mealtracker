@@ -26,7 +26,7 @@ function HeroSection() {
         <span>
           Checkout the github repository{" "}
           <Link
-            className="text-red-400 hover:underline"
+            className="text-primary hover:underline"
             href="https://github.com/awonfs/trpc-drizzle"
           >
             here

@@ -12,6 +12,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import FoodCard from "./FoodCard";
 import { serverClient } from "@/app/_trpc/serverClient";
 import { trpc } from "../app/_trpc/client";
 
@@ -39,17 +40,16 @@ function FoodCardMenu({
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Your foodCards</SheetTitle>
-          <SheetDescription>
-            Here you can see all your foodCards.
-          </SheetDescription>
-          <div>
+
+          <div className="flex flex-col gap-3">
             {getFoodCards.data?.map((foodCard) => {
               return (
-                <div key={foodCard.id}>
-                  <h1>{foodCard.title}</h1>
-                  <p>{foodCard.description}</p>
-                  <p>{foodCard.createdAt}</p>
-                </div>
+                <FoodCard
+                  key={foodCard.id}
+                  title={foodCard.title as string}
+                  description={foodCard.description as string}
+                  createdAt={foodCard.createdAt as string}
+                />
               );
             })}
           </div>
