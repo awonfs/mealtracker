@@ -16,6 +16,11 @@ type FoodCardProps = {
 };
 
 function FoodCard({ id, title, description, createdAt }: FoodCardProps) {
+  function formatDate(dateString: string) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}.${month}.${year}`;
+  }
+
   const getFoodCards = trpc.getFoodCards.useQuery();
   const deleteFoodCard = trpc.deleteFoodCard.useMutation({
     onSettled: () => {
@@ -39,7 +44,7 @@ function FoodCard({ id, title, description, createdAt }: FoodCardProps) {
         </CardTitle>
         <CardDescription className="flex flex-col text-xs text-primary-foreground">
           <span>{description}</span>
-          <span>{createdAt}</span>
+          <span>{formatDate(createdAt)}</span>
         </CardDescription>
       </CardHeader>
     </Card>
