@@ -42,5 +42,9 @@ export const appRouter = router({
       .where(eq(foodCards.id, id.input))
       .run();
   }),
+  deleteFoodCard: publicProcedure.input(z.number()).mutation(async (id) => {
+    await db.delete(foodCards).where(eq(foodCards.id, id.input)).run();
+    return true;
+  }),
 });
 export type AppRouter = typeof appRouter;

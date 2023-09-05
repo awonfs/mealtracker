@@ -46,6 +46,7 @@ function FoodCardMenu({
               return (
                 <FoodCard
                   key={foodCard.id}
+                  id={foodCard.id}
                   title={foodCard.title as string}
                   description={foodCard.description as string}
                   createdAt={foodCard.createdAt as string}
