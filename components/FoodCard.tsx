@@ -7,6 +7,8 @@ import {
 
 import { Trash2 } from "lucide-react";
 import { trpc } from "../app/_trpc/client";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 type FoodCardProps = {
   id: number;
@@ -42,9 +44,12 @@ function FoodCard({ id, title, description, createdAt }: FoodCardProps) {
             className="p-1 hover:scale-110 transition-all"
           />
         </CardTitle>
-        <CardDescription className="flex flex-col text-xs text-primary-foreground">
+        <CardDescription className="flex flex-col text-xs text-primary-foreground gap-1">
           <span>{description}</span>
           <span>{formatDate(createdAt)}</span>
+          <Button asChild variant={"secondary"} className="rounded w-1/2">
+            <Link href={`/foodcard/${id}`}>Open</Link>
+          </Button>
         </CardDescription>
       </CardHeader>
     </Card>
