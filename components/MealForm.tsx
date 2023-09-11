@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { trpc } from "@/app/_trpc/client";
 
 const formSchema = z.object({
   mealName: z.string().min(2).max(50),
@@ -22,6 +23,11 @@ const formSchema = z.object({
 });
 
 function MealForm({ foodCardId }: { foodCardId: string }) {
+  const getMeals = trpc.getMealsByFoodCardId.useQuery(parseInt(foodCardId));
+  const addMeal = trpc.addMeal.useMutation({
+    onSettled: () => {},
+  });
+  const toast = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,10 +38,12 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const foodCardIdInt = parseInt(foodCardId);
     const mealData = {
       ...values,
-      foodCardId,
+      foodCardId: foodCardIdInt,
     };
+    await addMeal.mutateAsync(mealData);
     console.log(mealData);
   }
 

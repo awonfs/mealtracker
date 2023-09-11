@@ -46,7 +46,7 @@ export const appRouter = router({
     await db.delete(foodCards).where(eq(foodCards.id, id.input)).run();
     return true;
   }),
-  createMeal: publicProcedure
+  addMeal: publicProcedure
     .input(
       z.object({
         foodCardId: z.number(),
