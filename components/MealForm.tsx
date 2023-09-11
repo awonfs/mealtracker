@@ -25,7 +25,9 @@ const formSchema = z.object({
 function MealForm({ foodCardId }: { foodCardId: string }) {
   const getMeals = trpc.getMealsByFoodCardId.useQuery(parseInt(foodCardId));
   const addMeal = trpc.addMeal.useMutation({
-    onSettled: () => {},
+    onSettled: () => {
+      getMeals.refetch();
+    },
   });
   const toast = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,7 +46,11 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
       foodCardId: foodCardIdInt,
     };
     await addMeal.mutateAsync(mealData);
-    console.log(mealData);
+    form.reset();
+    toast.toast({
+      title: "Meal added",
+      description: "Your meal has been added",
+    });
   }
 
   return (

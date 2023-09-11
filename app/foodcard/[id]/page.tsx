@@ -11,6 +11,7 @@ async function FoodCardPage({ params }: { params: { id: string } }) {
       </div>
       <div>
         <h2 className="text-xl">Meals</h2>
+        {JSON.stringify(meals)}
       </div>
     </main>
   );

@@ -64,15 +64,7 @@ export const appRouter = router({
       return true;
     }),
   getMealsByFoodCardId: publicProcedure.input(z.number()).query(async (id) => {
-    return await db
-      .select({
-        mealName: meals.mealName,
-        description: meals.description,
-        day: meals.day,
-      })
-      .from(meals)
-      .where(eq(meals.foodCardId, id.input))
-      .run();
+    return await db.select().from(meals).where(eq(meals.foodCardId, id.input));
   }),
 });
 export type AppRouter = typeof appRouter;
