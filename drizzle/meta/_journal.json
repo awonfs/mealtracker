@@ -15,6 +15,13 @@
       "when": 1693234820622,
       "tag": "0001_strong_ulik",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1694441985353,
+      "tag": "0002_breezy_thunderball",
+      "breakpoints": true
     }
   ]
 }

@@ -18,5 +18,7 @@ export const meals = sqliteTable("meals", {
   id: integer("id").primaryKey(),
   foodCardId: integer("foodCardId").references(() => foodCards.id),
   mealName: text("mealName"),
+  description: text("description"),
+  day: text("day"),
   createdAt: text("date").default(sql`CURRENT_DATE`),
 });

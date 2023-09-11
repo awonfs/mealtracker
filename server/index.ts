@@ -2,7 +2,7 @@ import { publicProcedure, router } from "./trpc";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import Database from "better-sqlite3";
-import { todos, foodCards } from "@/db/schema";
+import { todos, foodCards, meals } from "@/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
@@ -45,6 +45,34 @@ export const appRouter = router({
   deleteFoodCard: publicProcedure.input(z.number()).mutation(async (id) => {
     await db.delete(foodCards).where(eq(foodCards.id, id.input)).run();
     return true;
+  }),
+  createMeal: publicProcedure
+    .input(
+      z.object({
+        foodCardId: z.number(),
+        mealName: z.string(),
+        description: z.string(),
+        day: z.string(),
+      })
+    )
+    .mutation(async (values) => {
+      const { foodCardId, mealName, description, day } = values.input;
+      await db
+        .insert(meals)
+        .values({ foodCardId, mealName, description, day })
+        .run();
+      return true;
+    }),
+  getMealsByFoodCardId: publicProcedure.input(z.number()).query(async (id) => {
+    return await db
+      .select({
+        mealName: meals.mealName,
+        description: meals.description,
+        day: meals.day,
+      })
+      .from(meals)
+      .where(eq(meals.foodCardId, id.input))
+      .run();
   }),
 });
 export type AppRouter = typeof appRouter;

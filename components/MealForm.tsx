@@ -1,12 +1,5 @@
 "use client";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,7 +7,6 @@ import * as z from "zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +14,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { trpc } from "../app/_trpc/client";
 
 const formSchema = z.object({
   mealName: z.string().min(2).max(50),
@@ -30,7 +21,7 @@ const formSchema = z.object({
   day: z.string().min(2).max(50),
 });
 
-function MealForm() {
+function MealForm({ foodCardId }: { foodCardId: string }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,7 +32,11 @@ function MealForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const mealData = {
+      ...values,
+      foodCardId,
+    };
+    console.log(mealData);
   }
 
   return (
