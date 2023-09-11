@@ -40,10 +40,13 @@ function FoodCardMenu({
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Your foodCards</SheetTitle>
-
           <div className="flex flex-col gap-3">
-            {getFoodCards.data?.map((foodCard) => {
-              return (
+            {getFoodCards.data && getFoodCards.data.length === 0 ? (
+              <span className="text-center mt-5">
+                No foodcards.. Maybe add one?
+              </span>
+            ) : (
+              getFoodCards.data?.map((foodCard) => (
                 <FoodCard
                   key={foodCard.id}
                   id={foodCard.id}
@@ -51,8 +54,8 @@ function FoodCardMenu({
                   description={foodCard.description as string}
                   createdAt={foodCard.createdAt as string}
                 />
-              );
-            })}
+              ))
+            )}
           </div>
         </SheetHeader>
       </SheetContent>
