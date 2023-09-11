@@ -1,9 +1,11 @@
+"use client";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 
 import { Trash2 } from "lucide-react";
 import { trpc } from "../app/_trpc/client";
@@ -18,6 +20,7 @@ type FoodCardProps = {
 };
 
 function FoodCard({ id, title, description, createdAt }: FoodCardProps) {
+  const toast = useToast();
   function formatDate(dateString: string) {
     const [year, month, day] = dateString.split("-");
     return `${day}.${month}.${year}`;
@@ -31,8 +34,12 @@ function FoodCard({ id, title, description, createdAt }: FoodCardProps) {
   });
 
   async function handleDelete(id: number) {
-    console.log(id);
     deleteFoodCard.mutateAsync(id);
+    toast.toast({
+      variant: "destructive",
+      title: `FoodCard "${title}" deleted`,
+      description: "Your food card has been deleted successfully!",
+    });
   }
   return (
     <Card className="rounded bg-primary hover:cursor-pointer hover:scale-105 transition-all">

@@ -4,6 +4,8 @@ import { Quicksand } from "next/font/google";
 import Provider from "./_trpc/provider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/toaster";
+
 const quicksand = Quicksand({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Meal Tracker",
@@ -22,6 +24,7 @@ export default function RootLayout({
           <Provider>
             <Header />
             {children}
+            <Toaster />
           </Provider>
         </ThemeProvider>
       </body>

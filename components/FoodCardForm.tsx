@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "../app/_trpc/client";
 
 const formSchema = z.object({
@@ -21,6 +22,7 @@ const formSchema = z.object({
 });
 
 function FoodCardForm() {
+  const toast = useToast();
   const getFoodCards = trpc.getFoodCards.useQuery();
 
   const addFoodCard = trpc.addFoodCard.useMutation({
@@ -39,6 +41,10 @@ function FoodCardForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await addFoodCard.mutateAsync(values);
+    toast.toast({
+      title: "FoodCard Added",
+      description: "Your food card has been added successfully!",
+    });
     form.reset();
   }
   return (
