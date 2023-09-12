@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
+import { Plus } from "lucide-react";
 
 const formSchema = z.object({
   mealName: z.string().min(2).max(50),
@@ -59,7 +60,9 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="rounded">Add a meal</Button>
+        <Button className="rounded flex items-center gap-1">
+          Add a meal <Plus size={16} />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <Form {...form}>

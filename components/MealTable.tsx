@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Meal } from "@/types/interfaces";
 import { trpc } from "../app/_trpc/client";
+import { Edit, Trash2 } from "lucide-react";
 
 interface MealTableProps {
   meals: Meal[];
@@ -29,11 +30,23 @@ function MealTable({ meals }: MealTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {getMeals.data.map((meal) => (
+        {getMeals.data?.map((meal) => (
           <TableRow key={meal.id}>
             <TableCell>{meal.mealName}</TableCell>
             <TableCell>{meal.description}</TableCell>
             <TableCell>{meal.day}</TableCell>
+            <TableCell className="flex gap-2 justify-end w-full">
+              <Trash2
+                className="hover:scale-110 transition-all hover:cursor-pointer"
+                size={18}
+                strokeWidth={1.5}
+              />
+              <Edit
+                className="hover:scale-110 transition-all hover:cursor-pointer"
+                size={18}
+                strokeWidth={1.5}
+              />
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
