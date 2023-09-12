@@ -23,15 +23,25 @@ function HeroSection() {
           <UtensilsCrossed />
         </div>
         <Separator className="my-6" />
-        <span>
-          Checkout the github repository{" "}
-          <Link
-            className="text-primary hover:underline"
-            href="https://github.com/awonfs/trpc-drizzle"
-          >
-            here
-          </Link>
-        </span>
+        <div className="flex flex-col gap-3">
+          <span>
+            Checkout the github repository{" "}
+            <Link
+              className="text-primary hover:underline"
+              href="https://github.com/awonfs/trpc-drizzle"
+            >
+              here
+            </Link>
+          </span>
+          <span>
+            This project is for personal use and also <br /> a way to learn
+            Next.js with TRPC and Drizzle
+          </span>
+          <span>
+            This site is built with Next.js, TailwindCSS, <br /> ShadcnUI, TRPC,
+            Drizzle, and sqlite
+          </span>
+        </div>
       </div>
     </div>
   );
