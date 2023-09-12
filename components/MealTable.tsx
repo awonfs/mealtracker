@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -7,12 +8,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Meal } from "@/types/interfaces";
+import { trpc } from "../app/_trpc/client";
 
 interface MealTableProps {
   meals: Meal[];
 }
 
 function MealTable({ meals }: MealTableProps) {
+  const { foodCardId } = meals[0];
+  const getMeals = trpc.getMealsByFoodCardId.useQuery(foodCardId!!, {
+    initialData: meals,
+  });
   return (
     <Table>
       <TableHeader>
@@ -23,7 +29,7 @@ function MealTable({ meals }: MealTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {meals.map((meal) => (
+        {getMeals.data.map((meal) => (
           <TableRow key={meal.id}>
             <TableCell>{meal.mealName}</TableCell>
             <TableCell>{meal.description}</TableCell>

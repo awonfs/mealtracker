@@ -42,7 +42,7 @@ function FoodCardForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await addFoodCard.mutateAsync(values);
     toast.toast({
-      title: "FoodCard Added",
+      title: `FoodCard ${values.title} added`,
       description: "Your food card has been added successfully!",
     });
     form.reset();

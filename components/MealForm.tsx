@@ -23,13 +23,16 @@ const formSchema = z.object({
 });
 
 function MealForm({ foodCardId }: { foodCardId: string }) {
+  const toast = useToast();
+
   const getMeals = trpc.getMealsByFoodCardId.useQuery(parseInt(foodCardId));
+
   const addMeal = trpc.addMeal.useMutation({
     onSettled: () => {
       getMeals.refetch();
     },
   });
-  const toast = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
