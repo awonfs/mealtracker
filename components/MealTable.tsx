@@ -10,12 +10,14 @@ import {
 import { Meal } from "@/types/interfaces";
 import { trpc } from "../app/_trpc/client";
 import { Edit, Trash2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 interface MealTableProps {
   meals: Meal[];
 }
 
 function MealTable({ meals }: MealTableProps) {
+  const toast = useToast();
   const { foodCardId } = meals[0];
   const getMeals = trpc.getMealsByFoodCardId.useQuery(foodCardId!!, {
     initialData: meals,
@@ -26,9 +28,13 @@ function MealTable({ meals }: MealTableProps) {
     },
   });
 
-  async function handleDelete(id: number) {
-    if (!confirm("Are you sure you want to delete this meal?")) return;
+  async function handleDelete(id: number, mealName: string) {
     await deleteMeal.mutateAsync(id);
+    toast.toast({
+      variant: "destructive",
+      title: `${mealName} deleted`,
+      description: "Your meal has been deleted successfully!",
+    });
   }
 
   return (
@@ -51,7 +57,7 @@ function MealTable({ meals }: MealTableProps) {
                 className="hover:scale-110 transition-all hover:cursor-pointer"
                 size={18}
                 strokeWidth={1.5}
-                onClick={() => handleDelete(meal.id)}
+                onClick={() => handleDelete(meal.id, meal.mealName!!)}
               />
               <Edit
                 className="hover:scale-110 transition-all hover:cursor-pointer"
