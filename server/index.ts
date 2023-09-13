@@ -2,7 +2,7 @@ import { publicProcedure, router } from "./trpc";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { migrate } from "drizzle-orm/better-sqlite3/migrator";
 import Database from "better-sqlite3";
-import { todos, foodCards, meals } from "@/db/schema";
+import { foodCards, meals } from "@/db/schema";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
