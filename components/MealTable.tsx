@@ -20,6 +20,17 @@ function MealTable({ meals }: MealTableProps) {
   const getMeals = trpc.getMealsByFoodCardId.useQuery(foodCardId!!, {
     initialData: meals,
   });
+  const deleteMeal = trpc.deleteMeal.useMutation({
+    onSettled: () => {
+      getMeals.refetch();
+    },
+  });
+
+  async function handleDelete(id: number) {
+    if (!confirm("Are you sure you want to delete this meal?")) return;
+    await deleteMeal.mutateAsync(id);
+  }
+
   return (
     <Table>
       <TableHeader>
@@ -40,6 +51,7 @@ function MealTable({ meals }: MealTableProps) {
                 className="hover:scale-110 transition-all hover:cursor-pointer"
                 size={18}
                 strokeWidth={1.5}
+                onClick={() => handleDelete(meal.id)}
               />
               <Edit
                 className="hover:scale-110 transition-all hover:cursor-pointer"

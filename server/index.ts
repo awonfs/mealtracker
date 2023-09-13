@@ -59,5 +59,9 @@ export const appRouter = router({
   getMealsByFoodCardId: publicProcedure.input(z.number()).query(async (id) => {
     return await db.select().from(meals).where(eq(meals.foodCardId, id.input));
   }),
+  deleteMeal: publicProcedure.input(z.number()).mutation(async (id) => {
+    await db.delete(meals).where(eq(meals.id, id.input)).run();
+    return true;
+  }),
 });
 export type AppRouter = typeof appRouter;
