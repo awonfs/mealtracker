@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "../app/_trpc/client";
-
+import { formResetWithToast } from "@/functions/formResetWithToast";
 const formSchema = z.object({
   title: z.string().min(2).max(50),
   description: z.string().min(2).max(50),
@@ -41,11 +41,12 @@ function FoodCardForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     await addFoodCard.mutateAsync(values);
-    form.reset();
-    toast.toast({
-      title: `FoodCard ${values.title} added`,
-      description: "Your food card has been added successfully!",
-    });
+    formResetWithToast(
+      form,
+      toast,
+      `FoodCard ${values.title} added`,
+      "Your food card has been added successfully!"
+    );
   }
   return (
     <Form {...form}>

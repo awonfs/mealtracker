@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
+import { formResetWithToast } from "@/functions/formResetWithToast";
 
 const formSchema = z.object({
   mealName: z.string().min(2).max(50),
@@ -45,13 +46,13 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
       ...values,
       foodCardId: foodCardIdToInt,
     };
-
     await addMeal.mutateAsync(mealData);
-    form.reset();
-    toast.toast({
-      title: "Meal added",
-      description: "Your meal has been added",
-    });
+    formResetWithToast(
+      form,
+      toast,
+      `${values.mealName} added`,
+      "Your meal has been added successfully!"
+    );
   }
 
   return (
@@ -66,7 +67,6 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
               <FormControl>
                 <Input placeholder="What did you cook?" {...field} />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
