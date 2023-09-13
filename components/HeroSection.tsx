@@ -5,14 +5,15 @@ import Link from "next/link";
 
 function HeroSection() {
   return (
-    <div className="flex justify-center gap-8 border p-8">
-      <div className="flex-2">
+    <div className="flex flex-col w-3/4 md:flex-row justify-center gap-4 md:gap-8 border p-4 md:p-6 md:w-3/5">
+      <div className="flex-1 md:flex-2 mb-4 md:mb-0">
         <FoodCardForm />
       </div>
-
-      <div className="flex-1 ">
-        <h1>
-          Create a food card and start tracking <br /> your weekly meals
+      <Separator className="md:hidden" />
+      <div className="flex-1">
+        <h1 className="text-center md:text-left">
+          Create a food card and start tracking{" "}
+          <br className="hidden md:block" /> your weekly meals
         </h1>
 
         <Separator className="mt-6" />
@@ -22,7 +23,9 @@ function HeroSection() {
           <Soup />
           <UtensilsCrossed />
         </div>
+
         <Separator className="my-6" />
+
         <div className="flex flex-col gap-3">
           <span>
             Checkout the github repository{" "}
@@ -33,13 +36,21 @@ function HeroSection() {
               here
             </Link>
           </span>
-          <span>
-            This project is for personal use and also <br /> a way to learn
-            Next.js with TRPC and Drizzle
+          <span className="text-center md:text-left">
+            This project is for personal use and also{" "}
+            <br className="hidden md:block" /> a way to learn Next.js with TRPC
+            and Drizzle
           </span>
-          <span>
-            This site is built with Next.js, TailwindCSS, <br /> ShadcnUI, TRPC,
-            Drizzle, and sqlite
+          <span className="text-center md:text-left">
+            <span className="text-center md:text-left">
+              This site is built with{" "}
+              <span className="text-purple-500">Next.js </span>,{" "}
+              <span className="text-cyan-500">TailwindCSS</span>,{" "}
+              <span className="text-primary">ShadcnUI</span>,{" "}
+              <span className="text-blue-500">TRPC</span>,{" "}
+              <span className="text-green-500">Drizzle</span> and{" "}
+              <span className="text-gray-500">sqlite</span>
+            </span>
           </span>
         </div>
       </div>
