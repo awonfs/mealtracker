@@ -63,5 +63,23 @@ export const appRouter = router({
     await db.delete(meals).where(eq(meals.id, id.input)).run();
     return true;
   }),
+  editMeal: publicProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        mealName: z.string(),
+        description: z.string(),
+        day: z.string(),
+      })
+    )
+    .mutation(async (values) => {
+      const { id, mealName, description, day } = values.input;
+      await db
+        .update(meals)
+        .set({ mealName, description, day })
+        .where(eq(meals.id, id))
+        .run();
+      return true;
+    }),
 });
 export type AppRouter = typeof appRouter;
