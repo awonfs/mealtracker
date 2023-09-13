@@ -32,15 +32,8 @@ export const appRouter = router({
       await db.insert(foodCards).values({ title, description }).run();
       return true;
     }),
-  getFoodCard: publicProcedure.input(z.number()).query(async (id) => {
-    return await db
-      .select({
-        title: foodCards.title,
-        description: foodCards.description,
-      })
-      .from(foodCards)
-      .where(eq(foodCards.id, id.input))
-      .run();
+  getFoodCardById: publicProcedure.input(z.number()).query(async (id) => {
+    return await db.select().from(foodCards).where(eq(foodCards.id, id.input));
   }),
   deleteFoodCard: publicProcedure.input(z.number()).mutation(async (id) => {
     await db.delete(foodCards).where(eq(foodCards.id, id.input)).run();
