@@ -1,4 +1,4 @@
-import MealForm from "@/components/MealForm";
+import MealModal from "@/components/MealModal";
 import MealTable from "@/components/MealTable";
 import { serverClient } from "@/app/_trpc/serverClient";
 
@@ -8,7 +8,7 @@ async function FoodCardPage({ params }: { params: { id: string } }) {
     <main className="container flex min-h-screen flex-col items-center p-24 ">
       <div className="flex justify-between items-center w-full">
         <h1 className="text-2xl">Your meals</h1>
-        <MealForm foodCardId={params.id} />
+        <MealModal foodCardId={params.id} />
       </div>
       <div className="w-full mt-8 p-3  border rounded">
         <MealTable meals={meals} />

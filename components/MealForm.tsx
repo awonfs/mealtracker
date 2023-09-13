@@ -1,5 +1,3 @@
-"use client";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,7 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { trpc } from "@/app/_trpc/client";
-import { Plus } from "lucide-react";
 
 const formSchema = z.object({
   mealName: z.string().min(2).max(50),
@@ -24,10 +21,10 @@ const formSchema = z.object({
 });
 
 function MealForm({ foodCardId }: { foodCardId: string }) {
+  const foodCardIdToInt = parseInt(foodCardId);
   const toast = useToast();
-
-  const getMeals = trpc.getMealsByFoodCardId.useQuery(parseInt(foodCardId));
-
+  //*TRPC calls
+  const getMeals = trpc.getMealsByFoodCardId.useQuery(foodCardIdToInt);
   const addMeal = trpc.addMeal.useMutation({
     onSettled: () => {
       getMeals.refetch();
@@ -44,11 +41,11 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const foodCardIdInt = parseInt(foodCardId);
     const mealData = {
       ...values,
-      foodCardId: foodCardIdInt,
+      foodCardId: foodCardIdToInt,
     };
+
     await addMeal.mutateAsync(mealData);
     form.reset();
     toast.toast({
@@ -58,66 +55,54 @@ function MealForm({ foodCardId }: { foodCardId: string }) {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="rounded flex items-center gap-1">
-          Add a meal <Plus size={16} />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <FormField
+          control={form.control}
+          name="mealName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Meal</FormLabel>
+              <FormControl>
+                <Input placeholder="What did you cook?" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input placeholder="Describe your meal" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="day"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Day</FormLabel>
+              <FormControl>
+                <Input placeholder="When did you cook this food?" {...field} />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className="w-full rounded" type="submit">
+          Submit
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            <FormField
-              control={form.control}
-              name="mealName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Meal</FormLabel>
-                  <FormControl>
-                    <Input placeholder="What did you cook?" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Describe your meal" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="day"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Day</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="When did you cook this food?"
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="w-full rounded" type="submit">
-              Submit
-            </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+      </form>
+    </Form>
   );
 }
 
