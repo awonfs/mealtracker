@@ -1,34 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mealtracker :plate_with_cutlery:
 
-## Getting Started
+## Description
 
-First, run the development server:
+Mealtracker is a simple yet efficient way to keep track of your meals. Users can create food cards, adding meals they've consumed, alongside additional details such as a description and the date of the meal. This project was created using Next.js, Tailwind CSS, shadcnUI, Drizzle and tRPC.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Table of Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. First, fork this project to your GitHub account.
+2. Clone your forked repository:
+   ```bash
+    git clone <your-forked-repo-url>
+   ```
+3. ```bash
+    cd Mealtracker
+    npm i
+   ```
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+To get started with Mealtracker:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Run the development server:
+   ```bash
+   npm run dev
+   ```
+2. Open your browser and navigate to localhost:3000. You should now see the Mealtracker app running!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Features
 
-## Deploy on Vercel
+- Food Cards Creation: Quickly create cards representing each meal.
+- Detailed Descriptions: Describe what went into the meal or any other thoughts you had about it.
+- Date Tracking: Remember when you had each meal by attaching a date.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+For any queries or support, please open an issue on this repository. We'll get back to you as soon as possible.
+
+Made with :heart: by awonfs.
