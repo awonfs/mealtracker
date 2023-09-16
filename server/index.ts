@@ -11,25 +11,22 @@ const db = drizzle(sqlite);
 migrate(db, { migrationsFolder: "drizzle" });
 
 export const appRouter = router({
+  // Get all food cards.
   getFoodCards: publicProcedure.query(async () => {
     return await db.select().from(foodCards).all();
   }),
   addFoodCard: publicProcedure
     .input(z.object({ title: z.string(), description: z.string() }))
     .mutation(async (values) => {
+      // Extract the fields from the input
       const { title, description } = values.input;
+      // Insert the food card into the database
       await db.insert(foodCards).values({ title, description }).run();
+      // Return true to indicate that the mutation was successful
       return true;
     }),
   getFoodCardById: publicProcedure.input(z.number()).query(async (id) => {
     return await db.select().from(foodCards).where(eq(foodCards.id, id.input));
-  }),
-  deleteFoodCard: publicProcedure.input(z.number()).mutation(async (id) => {
-    //*  First, delete all associated meals with the given foodCardId
-    await db.delete(meals).where(eq(meals.foodCardId, id.input)).run();
-    //* Then delete the foodCard itself
-    await db.delete(foodCards).where(eq(foodCards.id, id.input)).run();
-    return true;
   }),
 
   addMeal: publicProcedure
@@ -42,14 +39,20 @@ export const appRouter = router({
       })
     )
     .mutation(async (values) => {
+      // Destructure the input values.
       const { foodCardId, mealName, description, day } = values.input;
+
+      // Insert the new meal into the database.
       await db
         .insert(meals)
         .values({ foodCardId, mealName, description, day })
         .run();
+
+      // Return true to indicate success.
       return true;
     }),
   getMealsByFoodCardId: publicProcedure.input(z.number()).query(async (id) => {
+    // return all meals for the given food card id
     return await db.select().from(meals).where(eq(meals.foodCardId, id.input));
   }),
   deleteMeal: publicProcedure.input(z.number()).mutation(async (id) => {
@@ -67,11 +70,15 @@ export const appRouter = router({
     )
     .mutation(async (values) => {
       const { id, mealName, description, day } = values.input;
+
+      // Update the meal with the given id
       await db
         .update(meals)
         .set({ mealName, description, day })
         .where(eq(meals.id, id))
         .run();
+
+      // Return true to indicate that the meal was updated
       return true;
     }),
 });
